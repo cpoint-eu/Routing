@@ -175,7 +175,7 @@ class DynamicRouter implements RouterInterface, RequestMatcherInterface, Chained
     {
         if ($this->eventDispatcher) {
             $event = new RouterGenerateEvent($name, $parameters, $referenceType);
-            $this->eventDispatcher->dispatch(Events::PRE_DYNAMIC_GENERATE, $event);
+            $this->eventDispatcher->dispatch($event, Events::PRE_DYNAMIC_GENERATE);
             $name = $event->getRoute();
             $parameters = $event->getParameters();
             $referenceType = $event->getReferenceType();
@@ -224,7 +224,7 @@ class DynamicRouter implements RouterInterface, RequestMatcherInterface, Chained
         $request = Request::create($pathinfo);
         if ($this->eventDispatcher) {
             $event = new RouterMatchEvent();
-            $this->eventDispatcher->dispatch(Events::PRE_DYNAMIC_MATCH, $event);
+            $this->eventDispatcher->dispatch($event, Events::PRE_DYNAMIC_MATCH);
         }
 
         if (!empty($this->uriFilterRegexp) && !preg_match($this->uriFilterRegexp, $pathinfo)) {
@@ -260,7 +260,7 @@ class DynamicRouter implements RouterInterface, RequestMatcherInterface, Chained
     {
         if ($this->eventDispatcher) {
             $event = new RouterMatchEvent($request);
-            $this->eventDispatcher->dispatch(Events::PRE_DYNAMIC_MATCH_REQUEST, $event);
+            $this->eventDispatcher->dispatch($event, Events::PRE_DYNAMIC_MATCH_REQUEST);
         }
 
         if ($this->uriFilterRegexp
